@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Full-Screen Chatbot</title>
   <style>
-    /* Style for the full-screen chatbot container */
+    /* Ensure the page and body take up the full screen */
     body, html {
       margin: 0;
       padding: 0;
@@ -14,6 +14,7 @@
       overflow: hidden; /* Prevent scrolling */
     }
 
+    /* Full-screen container for the chatbot */
     #chatbot-container {
       position: fixed;
       top: 0;
@@ -23,28 +24,49 @@
       background-color: #fff; /* Optional background color */
       z-index: 1000;
     }
+
+    /* The iframe takes up the entire screen */
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
 </head>
 <body>
   <!-- Full-Screen Chatbot Container -->
   <div id="chatbot-container">
-    <script type="text/javascript">
-      (function(d, t) {
-        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-        v.onload = function() {
-          window.voiceflow.chat.load({
+    <!-- Embed the Voiceflow chatbot via iframe -->
+    <iframe src="about:blank" id="chatbot-iframe"></iframe>
+  </div>
+
+  <script type="text/javascript">
+    (function(d, t) {
+      var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+      v.onload = function() {
+        // When the script is loaded, we inject the Voiceflow chatbot into the iframe
+        var iframe = document.getElementById('chatbot-iframe');
+        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        // Inject the script into the iframe to load the Voiceflow chatbot
+        var script = iframeDoc.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
+        script.onload = function() {
+          iframe.contentWindow.voiceflow.chat.load({
             verify: { projectID: '6777025971ddcfff0866c8de' },
             url: 'https://general-runtime.voiceflow.com',
             versionID: 'production'
           }).then(() => {
-            window.voiceflow.chat.open();
+            iframe.contentWindow.voiceflow.chat.open();
           });
         };
-        v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
-        v.type = "text/javascript";
-        s.parentNode.insertBefore(v, s);
-      })(document, 'script');
-    </script>
-  </div>
+        iframeDoc.body.appendChild(script);
+      };
+      v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
+      v.type = "text/javascript";
+      s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
 </body>
 </html>
