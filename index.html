@@ -3,56 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full-Screen Chatbot with iframe</title>
-  <style>
-    /* Full-screen iframe container */
-    #chatbot-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7); /* Optional overlay */
-      z-index: 1000; /* Ensure it's on top */
-    }
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    #close-chatbot {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 10px 15px;
-      background: red;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      z-index: 1100; /* Ensure button is above iframe */
-    }
-  </style>
+  <title>Embedded Chatbot</title>
 </head>
 <body>
-  <!-- Chatbot container -->
-  <div id="chatbot-container">
-    <button id="close-chatbot">Close</button>
-    <iframe id="chatbot-iframe" src="chatbot.html"></iframe>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const chatbotContainer = document.getElementById("chatbot-container");
-
-      // Close button functionality
-      const closeButton = document.getElementById("close-chatbot");
-      closeButton.addEventListener("click", () => {
-        chatbotContainer.style.display = "none";
-      });
-    });
+  <script type="text/javascript">
+    (function(d, t) {
+        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        v.onload = function() {
+          window.voiceflow.chat.load({
+            verify: { projectID: '6777025971ddcfff0866c8de' },
+            url: 'https://general-runtime.voiceflow.com',
+            versionID: 'production'
+          });
+        };
+        v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
+        v.type = "text/javascript"; 
+        s.parentNode.insertBefore(v, s);
+    })(document, 'script');
   </script>
 </body>
 </html>
