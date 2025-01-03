@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Full-Screen Chatbot</title>
+  <title>Full-Screen Chatbot with iframe</title>
   <style>
-    /* Make the chatbot container cover the whole screen */
+    /* Full-screen iframe container */
     #chatbot-container {
       position: fixed;
       top: 0;
@@ -14,7 +14,12 @@
       height: 100%;
       background-color: rgba(0, 0, 0, 0.7); /* Optional overlay */
       z-index: 1000; /* Ensure it's on top */
-      display: none; /* Initially hidden */
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     #close-chatbot {
@@ -27,6 +32,7 @@
       border: none;
       cursor: pointer;
       font-size: 16px;
+      z-index: 1100; /* Ensure button is above iframe */
     }
   </style>
 </head>
@@ -34,32 +40,36 @@
   <!-- Chatbot container -->
   <div id="chatbot-container">
     <button id="close-chatbot">Close</button>
-    <script type="text/javascript">
-      (function(d, t) {
-        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-        v.onload = function() {
-          window.voiceflow.chat.load({
-            verify: { projectID: '673efd1d3126bfc129787153' },
-            url: 'https://general-runtime.voiceflow.com',
-            versionID: 'production'
-          }).then(() => {
-            window.voiceflow.chat.open();
-          });
-        };
-        v.src = "https://cdn.voiceflow.com/widget/bundle.mjs";
-        v.type = "text/javascript";
-        s.parentNode.insertBefore(v, s);
-      })(document, 'script');
-    </script>
+    <iframe id="chatbot-iframe" src="about:blank"></iframe>
   </div>
 
   <script>
-    // Show the chatbot on page load
     document.addEventListener("DOMContentLoaded", () => {
       const chatbotContainer = document.getElementById("chatbot-container");
-      chatbotContainer.style.display = "block";
+      const chatbotIframe = document.getElementById("chatbot-iframe");
 
-      // Close chatbot logic
+      // Load the Voiceflow chatbot into the iframe
+      chatbotIframe.srcdoc = `
+        <script type="text/javascript">
+          (function(d, t) {
+              var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+              v.onload = function() {
+                window.voiceflow.chat.load({
+                  verify: { projectID: '6777025971ddcfff0866c8de' },
+                  url: 'https://general-runtime.voiceflow.com',
+                  versionID: 'production'
+                }).then(() => {
+                  window.voiceflow.chat.open();
+                });
+              }
+              v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
+              v.type = "text/javascript"; 
+              s.parentNode.insertBefore(v, s);
+          })(document, 'script');
+        </script>
+      `;
+
+      // Close button functionality
       const closeButton = document.getElementById("close-chatbot");
       closeButton.addEventListener("click", () => {
         chatbotContainer.style.display = "none";
