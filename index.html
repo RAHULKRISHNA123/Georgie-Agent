@@ -40,34 +40,12 @@
   <!-- Chatbot container -->
   <div id="chatbot-container">
     <button id="close-chatbot">Close</button>
-    <iframe id="chatbot-iframe" src="about:blank"></iframe>
+    <iframe id="chatbot-iframe" src="chatbot.html"></iframe>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const chatbotContainer = document.getElementById("chatbot-container");
-      const chatbotIframe = document.getElementById("chatbot-iframe");
-
-      // Load the Voiceflow chatbot into the iframe
-      chatbotIframe.srcdoc = `
-        <script type="text/javascript">
-          (function(d, t) {
-              var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-              v.onload = function() {
-                window.voiceflow.chat.load({
-                  verify: { projectID: '6777025971ddcfff0866c8de' },
-                  url: 'https://general-runtime.voiceflow.com',
-                  versionID: 'production'
-                }).then(() => {
-                  window.voiceflow.chat.open();
-                });
-              }
-              v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; 
-              v.type = "text/javascript"; 
-              s.parentNode.insertBefore(v, s);
-          })(document, 'script');
-        </script>
-      `;
 
       // Close button functionality
       const closeButton = document.getElementById("close-chatbot");
