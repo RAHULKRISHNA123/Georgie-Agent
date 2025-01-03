@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Triangle CompuDocs Voice Agent</title>
+        <title>Georgie Agent</title>
     </head>
     <body>
         <!-- Container for the Voice Agent widget -->
@@ -19,7 +19,8 @@
                     window.voiceflow.chat.load({
                         verify: { projectID: '6777025971ddcfff0866c8de' },
                         url: 'https://general-runtime.voiceflow.com',
-                        versionID: 'production'
+                        versionID: 'production',
+                        render: 'full-width'
                     }).then(() => {
                         window.voiceflow.chat.open();
                     });
